@@ -1,0 +1,53 @@
+<div class="container">
+  <h1
+    style="margin-left: 20px; margin-bottom: 20px;"
+    *ngIf="(employeeItems$| async)?.length > 0"
+  >
+    List of Employees
+  </h1>
+
+  <div *ngIf="(employeeItems$| async)?.length == 0">
+    <button
+    mat-raised-button
+    color="primary"
+    style="margin-left: 30px; margin-bottom: 30px; font-size: 50px; width: 700px; height: 100px;"
+    [routerLink]="['/add']"
+    >
+    Hire some employees
+  </button>
+  </div>
+
+  <table
+    class="table table-striped table-hover table-bordered"
+    *ngIf="(employeeItems$| async)?.length > 0"
+  >
+    <thead class="thead-primary">
+      <tr class="bg-primary">
+        <th>ID</th>
+        <th>Firstname</th>
+        <th>Lastname</th>
+        <th>Date of Birth</th>
+        <th>Hours</th>
+        <th>Department</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="bg-dark" *ngFor="let employee of employeeItems$ | async">
+        <td>
+          <a [routerLink]="['/detail', employee.id]">{{ employee.id }}</a>
+        </td>
+        <td>{{ employee.firstname }}</td>
+        <td>{{ employee.lastname }}</td>
+        <td>{{ employee.dateofbirth | date: 'dd/MM/yyyy' }} </td> <!-- | date: 'dd/MM/yyyy' -->
+        <td>{{ employee.hours }}</td>
+        <td>{{ employee.department }}</td>
+        <td>
+          <button class="btn btn-danger" (click)="removeEmployeeItem(employee.id)">
+            remove
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

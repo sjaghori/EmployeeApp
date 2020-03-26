@@ -1,0 +1,114 @@
+<div class="container">
+  <mat-card class="addemployee-card">
+    <mat-card-header>
+      <mat-card-title>Add a new Employee</mat-card-title>
+      <mat-card-subtitle>to the list</mat-card-subtitle>
+    </mat-card-header>
+    <form [formGroup]="employeeForm" (ngSubmit)="addEmployee()">
+      <mat-card-content>
+        <div class="form-row">
+          <div class="col-sm">
+            <mat-form-field>
+              <mat-label>Firstname</mat-label>
+              <input
+                matInput
+                required
+                placeholder="Max"
+                formControlName="firstname"
+              />
+              <mat-error *ngIf="firstname.invalid && firstname.errors.required"
+                >First Name required</mat-error
+              >
+            </mat-form-field>
+          </div>
+
+          <div class="col-sm">
+            <mat-form-field>
+              <mat-label>Lastname</mat-label>
+              <input
+                matInput
+                required
+                placeholder="Mustermann"
+                formControlName="lastname"
+              />
+              <mat-error *ngIf="lastname.invalid">Last Name required</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-sm">
+            <mat-form-field>
+              <mat-label>Date of Birth</mat-label>
+              <input
+                matInput
+                required
+                [min]="minDate"
+                [max]="maxDate"
+                [matDatepicker]="picker"
+                formControlName="dateofbirth"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker
+                #picker
+                startView="year"
+                [startAt]="startDate"
+              ></mat-datepicker>
+              <mat-error *ngIf="dateofbirth.invalid"
+                >Date of Birth required</mat-error
+              >
+            </mat-form-field>
+          </div>
+
+          <div class="col-sm">
+            <mat-form-field>
+              <mat-label>Hours</mat-label>
+              <input
+                matInput
+                required
+                placeholder="Enter Working Hours"
+                formControlName="hours"
+              />
+              <mat-error *ngIf="hours.invalid">Hours required</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-sm">
+            <mat-form-field>
+              <mat-label>Sector</mat-label>
+              <select matNativeControl required formControlName="department">
+                <option value="IT">IT</option>
+                <option value="HR">HR</option>
+                <option value="Management">Management</option>
+                <option value="Production">Production</option>
+              </select>
+              <mat-error *ngIf="department.invalid">Sector required</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-sm"></div>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button
+          mat-raised-button
+          color="primary"
+          style="margin-left: 33%; width: 150px; height: 80; margin-top: 10px; margin-bottom: 20px;"
+          type="submit"
+          [disabled]="!employeeForm.valid"
+        >
+          Save
+        </button>
+        <button
+          mat-raised-button
+          color="secondary"
+          style="margin-left: 5%; width: 150px; height: 80; margin-top: 10px; margin-bottom: 20px;"
+          type="reset"
+          [disabled]="employeeForm.pristine"
+          (click)="employeeForm.reset()"
+        >
+          Reset
+        </button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+</div>

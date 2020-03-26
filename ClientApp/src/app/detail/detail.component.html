@@ -1,0 +1,29 @@
+<div class="container">
+  <h1 style="margin-left: 20px; margin-bottom: 20px;" *ngIf="(employee$ | async) as employee">Employee of {{employee.id}}</h1>
+  <h1 style="margin-left: 20px; margin-bottom: 20px;" class="mt-5 mb-4" *ngIf="!(employee$ | async)">Unknown item</h1>
+  <table class="table table-striped table-hover table-bordered" *ngIf="(employee$ | async) as employee">
+    <thead class="thead-primary">
+      <tr >
+        <th class="bg-primary">ID</th>
+        <td class="bg-dark">{{employee.id}}</td>
+      </tr>
+      <tr >
+        <th class="bg-primary">Firstname</th>
+        <td class="bg-dark">{{employee.firstname}}</td>
+      </tr>
+      <tr>
+        <th class="bg-primary">Lastname</th>
+        <td class="bg-dark">{{employee.lastname}}</td>
+      </tr>
+      <tr>
+        <th class="bg-primary">Date of Birth</th>
+        <td class="bg-dark">{{employee.dateofbirth | date: 'dd/MM/yyyy' }}</td>
+      </tr>
+      <tr>
+        <th class="bg-primary">Hours</th>
+        <td class="bg-dark">{{employee.hours}}</td>
+      </tr>
+      <tr>
+        <th class="bg-primary">Department</th>
+        <td class="bg-dark">{{employee.department}}</td>
+      </tr>
