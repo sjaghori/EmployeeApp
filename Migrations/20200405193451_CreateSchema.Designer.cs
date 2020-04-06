@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bif4.SasanJaghori.EmployeeApp.Migrations
 {
     [DbContext(typeof(EmployeeDbContext))]
-    [Migration("20200319093802_CreateSchema")]
+    [Migration("20200405193451_CreateSchema")]
     partial class CreateSchema
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -30,6 +30,9 @@ namespace Bif4.SasanJaghori.EmployeeApp.Migrations
                     b.Property<string>("Department")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Email")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Firstname")
                         .HasColumnType("TEXT");
 
@@ -37,6 +40,12 @@ namespace Bif4.SasanJaghori.EmployeeApp.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Lastname")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UserSubject")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");

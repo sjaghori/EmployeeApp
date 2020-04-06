@@ -17,7 +17,10 @@ namespace Bif4.SasanJaghori.EmployeeApp.Migrations
                     Lastname = table.Column<string>(nullable: true),
                     Dateofbirth = table.Column<DateTime>(nullable: false),
                     Hours = table.Column<int>(nullable: false),
-                    Department = table.Column<string>(nullable: true)
+                    Department = table.Column<string>(nullable: true),
+                    UserSubject = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
