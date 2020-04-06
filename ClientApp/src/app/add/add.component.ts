@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Employee } from '../core/app-item';
 import { AppRepository } from '../core/app-repository.service';
+import { OAuthService } from 'angular-oauth2-oidc';
 
 @Component({
   selector: 'app-add',
   templateUrl: './add.component.html',
   styleUrls: ['./add.component.css']
 })
-export class AddComponent implements OnInit {
+export class AddComponent implements OnInit, OnDestroy  {
 
   employeeItems$: Observable<Employee[]>;
 
@@ -18,11 +19,16 @@ export class AddComponent implements OnInit {
   minDate: Date;
   maxDate: Date;
 
-  constructor(private appReposervice: AppRepository, private router: Router) {
+  public isLogged = false;
+  private authSubscription: Subscription;
+
+  constructor(private appReposervice: AppRepository, private router: Router, private oAuthService: OAuthService) {
     const currentYear = new Date().getFullYear();
     this.minDate = new Date(currentYear - 70, 0, 0); // oldest members are 70 years old
     this.maxDate = new Date(currentYear - 10, 0, 0); // newest members are at least 10 years old
   }
+
+
 
 
   employeeForm = new FormGroup({
@@ -35,12 +41,26 @@ export class AddComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.authSubscription = this.oAuthService.events.subscribe(() => this.updateAuthState());
+    this.updateAuthState();
+  }
+
+  ngOnDestroy() {
+    if (this.authSubscription) {
+      this.authSubscription.unsubscribe();
+    }
+  }
+
+
+  private updateAuthState() {
+    this.isLogged = this.oAuthService.hasValidAccessToken();
   }
 
   public addEmployee() {
     if (!this.employeeForm.valid) {
       return;
     }
+
 
     const value = this.employeeForm.value;
     const employeeItem: Employee = {
@@ -49,7 +69,9 @@ export class AddComponent implements OnInit {
       lastname: value.lastname,
       dateofbirth: value.dateofbirth,
       hours: +value.hours,
-      department: value.department
+      department: value.department,
+      name: null,
+      email: null
     };
 
     this.appReposervice.add(employeeItem);

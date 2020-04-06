@@ -29,6 +29,7 @@
         <th>Date of Birth</th>
         <th>Hours</th>
         <th>Department</th>
+        <th>Created by User</th>
         <th>Delete</th>
       </tr>
     </thead>
@@ -42,6 +43,7 @@
         <td>{{ employee.dateofbirth | date: 'dd/MM/yyyy' }} </td> <!-- | date: 'dd/MM/yyyy' -->
         <td>{{ employee.hours }}</td>
         <td>{{ employee.department }}</td>
+        <td>{{ employee.name}} ({{ employee.email}})</td>
         <td>
           <button class="btn btn-danger" (click)="removeEmployeeItem(employee.id)">
             remove

@@ -5,5 +5,6 @@ export class Employee {
   dateofbirth = new Date();
   hours: number;
   department: string;
-
+  name = '';
+  email = '';
 }

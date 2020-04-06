@@ -12,7 +12,7 @@ import { DetailComponent } from './detail/detail.component';
 import { AddComponent } from './add/add.component';
 import { CoreModule } from './core/core.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
@@ -21,6 +21,9 @@ import {MatSelectModule} from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatCardModule} from '@angular/material/card';
 import { MatNativeDateModule } from '@angular/material/core';
+import { OAuthModule } from 'angular-oauth2-oidc';
+import { LoginStatusComponent } from './login-status/login-status.component';
+import { AuthInterceptor } from './auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -29,6 +32,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     ListComponent,
     DetailComponent,
     AddComponent,
+    LoginStatusComponent,
   ],
   imports: [
     HttpClientModule,
@@ -50,8 +54,11 @@ import { MatNativeDateModule } from '@angular/material/core';
       { path: 'detail/:id', component: DetailComponent }
     ]),
     BrowserAnimationsModule,
+    OAuthModule.forRoot(),
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
